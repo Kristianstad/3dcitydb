@@ -9,7 +9,8 @@ ENV LANG=sv_SE.UTF-8 \
     LC_ALL=sv_SE.UTF-8 \
     LC_CTYPE=sv_SE.UTF-8
 
-RUN apt-get install -y --no-install-recommends \
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends \
         git \
         ca-certificates \
         build-essential \
@@ -17,6 +18,7 @@ RUN apt-get install -y --no-install-recommends \
         automake \
         cmake \
         zlib1g-dev \
+        postgresql-server-dev-all \
         libxml2-dev \
  && rm -rf /var/lib/apt/lists/* \
  && git clone https://github.com/verma/laz-perf.git \
@@ -40,6 +42,7 @@ RUN apt-get install -y --no-install-recommends \
         automake \
         cmake \
         zlib1g-dev \
+        postgresql-server-dev-all \
         libxml2-dev
 
 COPY ./initdb-pgpointcloud.sh /docker-entrypoint-initdb.d/10_pgpointcloud.sh
