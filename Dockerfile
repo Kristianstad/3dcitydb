@@ -22,7 +22,7 @@ RUN apt-get update \
         zlib1g-dev \
         postgresql-server-dev-all \
         libxml2-dev \
-        pgagent
+        pgagent \
  && rm -rf /var/lib/apt/lists/* \
  && git clone https://github.com/verma/laz-perf.git \
  && cd laz-perf \
