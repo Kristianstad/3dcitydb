@@ -1,6 +1,8 @@
-FROM 3dcitydb/3dcitydb-pg:15-3.3-4.4.0
-
 ARG POSTGRES_VERSION="15"
+ARG POSTGIS_VERSION="3.3"
+ARG THREEDCITYDB_VERSION="4.4.0"
+
+FROM 3dcitydb/3dcitydb-pg:$POSTGRES_VERSION-$POSTGIS_VERSION-$THREEDCITYDB_VERSION
 
 RUN localedef -i sv_SE -c -f UTF-8 -A /usr/share/locale/locale.alias sv_SE.UTF-8 \
  && ln -sf /usr/share/zoneinfo/Europe/Stockholm /etc/localtime
@@ -20,6 +22,7 @@ RUN apt-get update \
         zlib1g-dev \
         postgresql-server-dev-all \
         libxml2-dev \
+        pgagent
  && rm -rf /var/lib/apt/lists/* \
  && git clone https://github.com/verma/laz-perf.git \
  && cd laz-perf \
