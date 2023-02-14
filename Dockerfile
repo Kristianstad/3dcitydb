@@ -23,7 +23,6 @@ RUN apt-get update \
         postgresql-server-dev-all \
         libxml2-dev \
         pgagent \
- && rm -rf /var/lib/apt/lists/* \
  && git clone https://github.com/verma/laz-perf.git \
  && cd laz-perf \
  && cmake . \
@@ -37,6 +36,7 @@ RUN apt-get update \
  && ./configure --with-lazperf=/usr/local --with-pgconfig=/usr/lib/postgresql/${POSTGRES_VERSION}/bin/pg_config CFLAGS="-Wall -Werror -O2 -g" \
  && make \
  && make install \
+ && apt-get install -y --no-install-recommends pgagent \
  && apt-get purge -y --auto-remove \
         git \
         ca-certificates \
@@ -46,6 +46,7 @@ RUN apt-get update \
         cmake \
         zlib1g-dev \
         postgresql-server-dev-all \
-        libxml2-dev
+        libxml2-dev \
+  && rm -rf /var/lib/apt/lists/*
 
 COPY ./40_pgpointcloud.sh ./50_pgagent.sh /docker-entrypoint-initdb.d/
