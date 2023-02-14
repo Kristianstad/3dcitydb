@@ -45,4 +45,4 @@ RUN apt-get update \
         postgresql-server-dev-all \
         libxml2-dev
 
-COPY ./initdb-pgpointcloud.sh /docker-entrypoint-initdb.d/10_pgpointcloud.sh
+COPY ./initdb-pgpointcloud.sh /docker-entrypoint-initdb.d/40_pgpointcloud.sh
