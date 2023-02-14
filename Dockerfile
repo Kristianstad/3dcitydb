@@ -1,11 +1,15 @@
 FROM 3dcitydb/3dcitydb-pg:15-3.3-4.4.0
 
-ENV POSTGRES_VERSION 15
-ENV POSTGIS_VERSION 3
+ARG POSTGRES_VERSION="15"
 
 RUN localedef -i sv_SE -c -f UTF-8 -A /usr/share/locale/locale.alias sv_SE.UTF-8 \
- && ln -sf /usr/share/zoneinfo/Europe/Stockholm /etc/localtime \
- && apt-get install -y --no-install-recommends \
+ && ln -sf /usr/share/zoneinfo/Europe/Stockholm /etc/localtime
+
+ENV LANG=sv_SE.UTF-8 \
+    LC_ALL=sv_SE.UTF-8 \
+    LC_CTYPE=sv_SE.UTF-8
+
+RUN apt-get install -y --no-install-recommends \
         git \
         ca-certificates \
         build-essential \
@@ -39,6 +43,5 @@ RUN localedef -i sv_SE -c -f UTF-8 -A /usr/share/locale/locale.alias sv_SE.UTF-8
         zlib1g-dev \
         postgresql-server-dev-all \
         libxml2-dev
-ENV LANG sv_SE.UTF-8
 
 COPY ./initdb-pgpointcloud.sh /docker-entrypoint-initdb.d/10_pgpointcloud.sh
