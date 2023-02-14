@@ -4,6 +4,8 @@ ARG THREEDCITYDB_VERSION="4.4.0"
 
 FROM 3dcitydb/3dcitydb-pg:$POSTGRES_VERSION-$POSTGIS_VERSION-$THREEDCITYDB_VERSION
 
+ARG POSTGRES_VERSION
+
 RUN localedef -i sv_SE -c -f UTF-8 -A /usr/share/locale/locale.alias sv_SE.UTF-8 \
  && ln -sf /usr/share/zoneinfo/Europe/Stockholm /etc/localtime
 
@@ -36,7 +38,6 @@ RUN apt-get update \
  && ./configure --with-lazperf=/usr/local --with-pgconfig=/usr/lib/postgresql/${POSTGRES_VERSION}/bin/pg_config CFLAGS="-Wall -Werror -O2 -g" \
  && make \
  && make install \
- && apt-get install -y --no-install-recommends pgagent \
  && apt-get purge -y --auto-remove \
         git \
         ca-certificates \
