@@ -48,6 +48,7 @@ RUN apt-get update \
         zlib1g-dev \
         postgresql-server-dev-all \
         libxml2-dev \
-  && rm -rf /var/lib/apt/lists/*
+  && rm -rf /var/lib/apt/lists/* \
+  && sed -i '/^docker_create_db_directories().*/a [ -n "$SOCKDIR" ] && mkdir -p "$SOCKDIR" && chmod 775 "$SOCKDIR" || :' /usr/local/bin/docker-entrypoint.sh
 
 COPY ./40_pgpointcloud.sh ./50_pgagent.sh /docker-entrypoint-initdb.d/
