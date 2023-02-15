@@ -25,6 +25,7 @@ RUN apt-get update \
         postgresql-server-dev-all \
         libxml2-dev \
         pgagent \
+        postgresql-$POSTGRES_VERSION-tds-fdw \
  && git clone https://github.com/verma/laz-perf.git \
  && cd laz-perf \
  && cmake . \
